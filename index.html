@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<title>FZP</title>
+<script src="xlsx.full.min.js"></script>
+
+<!-- Vendor: Bootstrap Stylesheets http://getbootstrap.com -->
+    <link rel="stylesheet" href="js/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+
+</head>
+<body ng-app="kskowronskiWebApp">
+
+<!-- Vendor: Javascripts 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+<script src="js/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+<!-- Vendor: Angular, followed by our custom Javascripts -->
+<script src="js/angular-1.5.8/angular.min.js"></script>
+<script src="js/angular-1.5.8/angular-route.min.js"></script>
+<!-- my js  -->
+<script src="js/main.js"></script>
+
+<div ng-controller="ApplicationCtrl">
+<h1>Hello {{ name }}!</h1>
+    
+    <button ng-click="sayHelloWorld()">Say "Hello World"!</button>
+</div>  
+
+<p>1. <input type="file" name="xlfile" id="xlf" /> Get File</p>
+
+
+<p>2. JSON: </p> 
+<pre id="out"></pre>
+
+<script>
+var X = XLSX;
+
+
+var xlf = document.getElementById('xlf');
+
+function handleFile(e) {
+  var files = e.target.files;
+  var f = files[0];
+  readXLSX( f );
+  //alert(f.name);
+}
+
+if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+
+
+function readXLSX( file ) {
+    /* set up XMLHttpRequest */
+    var url = file.name;
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", url, true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function(e) {
+      var arraybuffer = oReq.response;
+
+      /* convert data to binary string */
+      var data = new Uint8Array(arraybuffer);
+      var arr = new Array();
+      for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+
+      /* Call XLSX */
+      var workbook = XLSX.read(bstr, {type:"binary"});
+
+      /* DO SOMETHING WITH workbook HERE */
+      var first_sheet_name = workbook.SheetNames[0];
+      /* Get worksheet */
+      var worksheet = workbook.Sheets[first_sheet_name];
+      console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+
+      process_workbook(workbook);
+    }
+
+    oReq.send();
+
+  }
+
+  function process_workbook (wb) {
+      var output = "";
+      
+          output = JSON.stringify(to_json(wb), 2, 2);
+        
+      
+      if(out.innerText === undefined) out.textContent = output;
+      else out.innerText = output;
+      if(typeof console !== 'undefined') console.log("output", new Date());
+  }
+
+  function to_json(workbook) {
+    var result = {};
+    workbook.SheetNames.forEach(function(sheetName) {
+      var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+      if(roa.length > 0){
+        result[sheetName] = roa;
+      }
+    });
+    return result;
+  }
+
+
+
+
+</script>
+</body>
+</html>
