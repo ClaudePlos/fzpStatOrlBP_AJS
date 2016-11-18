@@ -4,6 +4,8 @@
 var app = angular.module('ksApp.controllers', []);
 
 
+
+
 app.run(function ($rootScope, $templateCache) {
     $rootScope.$on('$viewContentLoaded', function () {
         $templateCache.removeAll();
@@ -18,7 +20,21 @@ app.controller('DummyCtrl', ['$scope', 'DummyFactory', function ($scope, DummyFa
     })
 }]);
 
+/*app.controller('UserListCtrl', function($scope, $http ) {
 
+    delete $http.defaults.headers.common['X-Requested-With'];
+
+    $http({
+        method : 'GET',
+        url : 'http://localhost:40884/napFzpStatOrlBP_Rest/napFZP/napuzytkownik'
+    }).then(function successCallback(response) {
+        $scope.users = response.data;
+    }, function errorCallback(response) {
+        console.log(response.statusText);
+    });
+
+    // $scope.users = dataService.getData();
+});*/
 
 app.controller('UserListCtrl', ['$scope', 'UsersFactory', 'UserFactory', '$location',
     function ($scope, UsersFactory, UserFactory, $location) {
@@ -42,8 +58,10 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', 'UserFactory', '$locat
         };
 
         $scope.users = UsersFactory.query();
+
+
     }]);
- 
+
   app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UserFactory', '$location',
     function ($scope, $routeParams, UserFactory, $location) {
 
