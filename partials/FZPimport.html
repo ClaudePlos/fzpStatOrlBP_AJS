@@ -1,3 +1,145 @@
 <div class="span6">
 FZP (import)
+
+
+    <p>1. <input type="file" name="xlfile" id="xlf" /> Get File</p>
+
+
+    <p>2. JSON: </p>
+    <pre id="out"></pre>
+
+    <script>
+        var X = XLSX;
+
+
+        var xlf = document.getElementById('xlf');
+
+        function handleFile(e) {
+            var files = e.target.files;
+            var f = files[0];
+            readXLSX( f );
+            //alert(f.name);
+        }
+
+        if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+
+
+        function readXLSX( file ) {
+            /* set up XMLHttpRequest */
+            var url = file.name;
+            var oReq = new XMLHttpRequest();
+            oReq.open("GET", url, true);
+            oReq.responseType = "arraybuffer";
+
+            oReq.onload = function(e) {
+                var arraybuffer = oReq.response;
+
+                /* convert data to binary string */
+                var data = new Uint8Array(arraybuffer);
+                var arr = new Array();
+                for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                var bstr = arr.join("");
+
+                /* Call XLSX */
+                var workbook = XLSX.read(bstr, {type:"binary"});
+
+                /* DO SOMETHING WITH workbook HERE */
+                var first_sheet_name = workbook.SheetNames[0];
+                /* Get worksheet */
+                var worksheet = workbook.Sheets[first_sheet_name];
+                console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+
+                console.log("Start");
+                console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
+
+                var exc = new Array();
+                exc = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+
+                for (x in exc) {
+                    for (a in x) {
+                        console.log("Start" + x[a]);
+                    }
+                }
+
+                process_workbook(workbook);
+            }
+
+            oReq.send();
+
+        }
+
+        function process_workbook (wb) {
+            var output = "";
+            var output2 = "";
+
+            output = JSON.stringify(to_json(wb), 2, 2);
+
+
+
+
+            if(out.innerText === undefined) out.textContent = output;
+            else out.innerText = output;
+            if(typeof console !== 'undefined') console.log("output", new Date());
+
+
+
+
+
+            //output2 = to_table(wb);
+
+
+
+
+
+        }
+
+        function to_json(workbook) {
+            var result = {};
+            workbook.SheetNames.forEach(function(sheetName) {
+                var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                if(roa.length > 0){
+                    result[sheetName] = roa;
+                }
+            });
+            return result;
+        }
+
+        function to_table(workbook) {
+            var result = {};
+
+            var x = document.createElement("TABLE");
+
+            x.setAttribute("id", "myTable");
+            document.body.appendChild(x);
+
+            var y = document.createElement("TR");
+            y.setAttribute("id", "myTr");
+            document.getElementById("myTable").appendChild(y);
+
+            var z = document.createElement("TD");
+
+            var t = document.createTextNode("cell");
+
+
+            workbook.SheetNames.forEach(function(sheetName) {
+                var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                var t = document.createTextNode("cell");
+                if(roa.length > 0){
+                    //result[sheetName] = roa;
+                }
+            });
+
+            z.appendChild(t);
+            document.getElementById("myTr").appendChild(z);
+
+            return result;
+        }
+
+
+
+
+    </script>
+
+
+
 </div>
