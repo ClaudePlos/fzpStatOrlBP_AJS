@@ -55,11 +55,7 @@ FZP (import)
                 var exc = new Array();
                 exc = XLSX.utils.sheet_to_json(worksheet,{raw:true});
 
-                for (x in exc) {
-                    for (a in x) {
-                        console.log("Start" + x[a]);
-                    }
-                }
+                to_table(exc);
 
                 process_workbook(workbook);
             }
@@ -81,16 +77,6 @@ FZP (import)
             else out.innerText = output;
             if(typeof console !== 'undefined') console.log("output", new Date());
 
-
-
-
-
-            //output2 = to_table(wb);
-
-
-
-
-
         }
 
         function to_json(workbook) {
@@ -104,7 +90,10 @@ FZP (import)
             return result;
         }
 
-        function to_table(workbook) {
+        function to_table(exc) {
+
+
+
             var result = {};
 
             var x = document.createElement("TABLE");
@@ -116,21 +105,46 @@ FZP (import)
             y.setAttribute("id", "myTr");
             document.getElementById("myTable").appendChild(y);
 
-            var z = document.createElement("TD");
-
-            var t = document.createTextNode("cell");
 
 
-            workbook.SheetNames.forEach(function(sheetName) {
-                var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                var t = document.createTextNode("cell");
-                if(roa.length > 0){
-                    //result[sheetName] = roa;
-                }
-            });
 
-            z.appendChild(t);
-            document.getElementById("myTr").appendChild(z);
+            for (var i = 0; i < exc.length; i++) {
+
+
+                console.log("Start" + exc[i].q1);
+                console.log("Start" + exc[i].q2);
+                console.log("Start" + exc[i].q3);
+
+
+                var y = document.createElement("TR");
+                y.setAttribute("id", "myTr"+i);
+                document.getElementById("myTable").appendChild(y);
+
+
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i].q1);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
+
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i].q2);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
+
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i].q3);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
+
+
+
+
+            }
+
+
+
+
+
 
             return result;
         }
