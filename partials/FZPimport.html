@@ -1,12 +1,17 @@
+<style>
+    .democlass {
+        color: red;
+    }
+</style>
 <div class="span6">
 FZP (import)
 
 
     <p>1. <input type="file" name="xlfile" id="xlf" /> Get File</p>
 
+    <p>2. Tabela: </p>
+    <table id="tabeleOut" style="width:100%"></table>
 
-    <p>2. JSON: </p>
-    <pre id="out"></pre>
 
     <script>
         var X = XLSX;
@@ -96,10 +101,12 @@ FZP (import)
 
             var result = {};
 
-            var x = document.createElement("TABLE");
+            var x = document.getElementById("tabeleOut");
 
             x.setAttribute("id", "myTable");
-            document.body.appendChild(x);
+            x.setAttribute("class", "democlass");
+
+            //document.body.appendChild(x);
 
             var y = document.createElement("TR");
             y.setAttribute("id", "myTr");
@@ -122,12 +129,12 @@ FZP (import)
 
 
                 var z = document.createElement("TD");
-                var t = document.createTextNode(exc[i].q1);
+                var t = document.createTextNode(exc[i]["Cena za litr"]);
                 z.appendChild(t);
                 document.getElementById("myTr"+i).appendChild(z);
 
                 var z = document.createElement("TD");
-                var t = document.createTextNode(exc[i].q2);
+                var t = document.createTextNode(exc[i].CenaSprzedazySrednia);
                 z.appendChild(t);
                 document.getElementById("myTr"+i).appendChild(z);
 
@@ -154,6 +161,9 @@ FZP (import)
 
     </script>
 
+
+    <p>3. JSON: </p>
+    <pre id="out"></pre>
 
 
 </div>
