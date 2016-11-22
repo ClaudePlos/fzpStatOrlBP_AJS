@@ -9,3 +9,7 @@ Choose a file for example: test2.xlsx for xlsx or test.xls for xls
 
 https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
 
+
+--> Info about REST and Netbeans
+1. Netbeans -> napFzpStatOrlBP_Rest DB -> REST
+2. fzpStatOrlBP_AJS -> AngularJS connect with REST

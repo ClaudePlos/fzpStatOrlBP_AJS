@@ -17,10 +17,34 @@
 FZP (import)
 
 
-    <p>1. <input type="file" name="xlfile" id="xlf" /> Get File</p>
 
-    <p>2. Tabela: </p>
-    <table id="tabeleOut" style="width:100%"></table>
+  <form name="myForm">
+
+        <label for="singleSelect">1. Wybierz dostawcę: </label>
+        <select name="singleSelect" ng-model="data.singleSelect">
+            <option value="Orlen">Orlen</option>
+            <option value="Statoil">Statoil</option>
+            <option value="BP">BP(Todo)</option>
+        </select><br>
+
+      <tt>Dostawca faktury = {{data.singleSelect}}</tt>
+
+      <br><br>
+      <label>2. Wskaż plik (excel z pozycjami):  </label>
+        <input type="file" name="xlfile" id="xlf" /> Get File</p>
+
+      <br><br>
+      <label for="repeatSelect">3. Do jakiej firmy wgrać fakture: </label>
+      <select name="repeatSelect" id="repeatSelect" ng-model="companyList.selectCompany">
+          <option ng-repeat="com in companyList.company" value="{{com.frmId}}">{{com.frmNazwa}}</option>
+      </select>
+      <br>
+      <tt>Firma = {{companyList.selectCompany}}</tt>
+
+
+      <br><br>
+       <label>4. Wskaż plik (excel z pozycjami):  </label>
+       <table id="tabeleOut" style="width:100%"></table>
 
 
     <script>
@@ -228,6 +252,9 @@ FZP (import)
 
     <p>3. JSON: </p>
     <pre id="out"></pre>
+
+  </form>
+
 
 
 </div>

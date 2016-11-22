@@ -99,3 +99,30 @@ app.controller('ApplicationCtrl', function ($scope) {
 });
 
 
+//my02
+app.controller('FzpOrlen', ['$scope', 'CompanyFactory', '$location',
+    function ($scope, CompanyFactory, $location) {
+
+    $scope.data = {
+        singleSelect: null,
+        multipleSelect: [],
+        option1: 'option-1',
+
+    };
+
+    $scope.companyList = CompanyFactory.query();
+
+    $scope.companyList2 = {
+        selectCompany: null,
+        company: [
+            {id: '1', name: 'Option A'},
+            {id: '2', name: 'Option B'},
+            {id: '3', name: 'Option C'}
+        ]
+    };
+
+
+
+}]);
+
+

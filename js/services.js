@@ -39,6 +39,18 @@ services.factory('UserFactory', function ($resource) {
     })
 });
 
+
+//FZP orlen package
+services.factory('CompanyFactory', function ($resource) {
+    console.log("CompanyFactory start")
+    return $resource( url + '/napFzpStatOrlBP_Rest/napFZP/napvfirmykonsorcjum', {}, {
+        query: { method: 'GET', interceptor : {responseError : resourceErrorHandler}, isArray: true },
+        create: { method: 'POST' }
+    })
+});
+
+
+
 function resourceErrorHandler(response) {
     console.log(response)
 };
