@@ -2,6 +2,16 @@
     .democlass {
         color: red;
     }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+
 </style>
 <div class="span6">
 FZP (import)
@@ -95,6 +105,10 @@ FZP (import)
             return result;
         }
 
+
+
+
+
         function to_table(exc) {
 
 
@@ -105,12 +119,27 @@ FZP (import)
 
             x.setAttribute("id", "myTable");
             x.setAttribute("class", "democlass");
+            //x.style.border = "1px solid #000";
 
             //document.body.appendChild(x);
 
             var y = document.createElement("TR");
             y.setAttribute("id", "myTr");
+            y.style.color = 'black';
             document.getElementById("myTable").appendChild(y);
+
+            /*var z = document.createElement("TD");
+            var t = document.createTextNode("Nr faktury");
+            z.appendChild(t);
+            document.getElementById("myTr").appendChild(z);*/
+
+            names = Object.getOwnPropertyNames(exc[0]); //pobieram nazwy kolumn
+
+            var k = 1;
+            for (var key in exc[0] ) {
+                addHeadingTable( names[k]);
+                k++;
+            }
 
 
 
@@ -127,24 +156,53 @@ FZP (import)
                 y.setAttribute("id", "myTr"+i);
                 document.getElementById("myTable").appendChild(y);
 
+                var j = 1;
+                for (var key in exc[0] ) {
 
+                    var z = document.createElement("TD");
+                    var t = document.createTextNode(exc[i][ names[j] ]);
+                    z.appendChild(t);
+                    document.getElementById("myTr"+i).appendChild(z);
+
+                    j++;
+                }
+
+                /*
                 var z = document.createElement("TD");
-                var t = document.createTextNode(exc[i]["Cena za litr"]);
+                var t = document.createTextNode(exc[i]["Nr faktury"]);
                 z.appendChild(t);
                 document.getElementById("myTr"+i).appendChild(z);
 
                 var z = document.createElement("TD");
-                var t = document.createTextNode(exc[i].CenaSprzedazySrednia);
+                var t = document.createTextNode(exc[i]["Nr karty"]);
                 z.appendChild(t);
                 document.getElementById("myTr"+i).appendChild(z);
 
                 var z = document.createElement("TD");
-                var t = document.createTextNode(exc[i].q3);
+                var t = document.createTextNode(exc[i]["Data realizacji"]);
                 z.appendChild(t);
                 document.getElementById("myTr"+i).appendChild(z);
 
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i]["Nr stacji"]);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
 
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i]["Miejscowość"]);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
 
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i]["Nazwa produktu"]);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
+
+                var z = document.createElement("TD");
+                var t = document.createTextNode(exc[i]["Ilość litrów"]);
+                z.appendChild(t);
+                document.getElementById("myTr"+i).appendChild(z);
+                */
 
             }
 
@@ -157,6 +215,12 @@ FZP (import)
         }
 
 
+        function addHeadingTable( name ){
+            var z = document.createElement("TD");
+            var t = document.createTextNode( name  );
+            z.appendChild(t);
+            document.getElementById("myTr").appendChild(z);
+        }
 
 
     </script>
