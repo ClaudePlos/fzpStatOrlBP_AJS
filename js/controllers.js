@@ -110,7 +110,7 @@ app.controller('FzpOrlen', ['$scope', 'CompanyFactory', '$location',
 
     };
 
-    $scope.companyList = CompanyFactory.query();
+    $scope.companyList = CompanyFactory.query( {}, function success() {  console.log($scope.companyList) }, function err() {} );
 
     $scope.companyList2 = {
         selectCompany: null,
