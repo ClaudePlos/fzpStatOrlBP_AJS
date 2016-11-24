@@ -118,6 +118,10 @@ app.controller('FzpOrlen', ['$scope', 'CompanyFactory', '$location',
         }, function err() {} )
     };
 
+        $scope.checkCardsEmlpoyees = function() {
+            alert("run function");
+        };
+
 
 
 }]);
