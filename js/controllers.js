@@ -110,15 +110,12 @@ app.controller('FzpOrlen', ['$scope', 'CompanyFactory', '$location',
 
     };
 
-    $scope.companyList = CompanyFactory.query( {}, function success() {  console.log($scope.companyList) }, function err() {} );
 
-    $scope.companyList2 = {
+    $scope.companyList = {
         selectCompany: null,
-        company: [
-            {id: '1', name: 'Option A'},
-            {id: '2', name: 'Option B'},
-            {id: '3', name: 'Option C'}
-        ]
+        company: CompanyFactory.query( {}, function success() {
+            console.log($scope.companyList)
+        }, function err() {} )
     };
 
 
